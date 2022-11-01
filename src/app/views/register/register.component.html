@@ -1,0 +1,170 @@
+
+<div class="modal fade" bsModal #login="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-static-name">
+  <div class="modal-dialog" style=" margin-top: 120px;margin-left: 350px;">
+    <div class="modal-content" style="width: 800px;">
+      <div class="row" style="margin: 10px;">
+        <div class="col-md-6">
+          <h4 id="dialog-static-name" class="modal-title pull-left color">Join ArtHarbour</h4>
+          <p></p>
+          <p style="color: white; background-color : green; height:30px" *ngIf="verify">{{msg}}</p>
+          <p style="color: white; background-color : rgb(195, 5, 5); height:30px" *ngIf="invalid">{{msg}}</p>
+          <form class="form" [formGroup]="signupForm" (ngSubmit)="submit()">
+ 
+            <div class="form-group">
+              <label class="color">Email address</label>
+              <div class="input-group mb-3">
+                <div class="input-group-text">
+                  <i class="bi bi-envelope"></i>
+                </div>
+                <input type="email" formControlName="email" class="form-control" placeholder="Please enter email"
+                  name="email"
+                  [ngClass]="{ 'is-invalid': submitted && f['email'].errors,'is-valid': submitted && f['email'].valid }"
+                  id="email" required>
+                <button type="button" class="btn" style="background-color: rgb(53, 202, 197); color: white;"
+                  (click)="emailVerify()">Verify Email</button>
+                <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                  <div *ngIf="f['email'].errors['required']">Please enter email address.</div>
+                  <div *ngIf="signupForm.hasError('pattern','email')" class="err-msg">Please enter valid email address.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="color">Username</label>
+              <div class="input-group mb-3">
+                <div class="input-group-text">
+                  <i class="bi bi-person"></i>
+                </div>
+                <input type="text" formControlName="userName" class="form-control removeDisable" placeholder="Please enter userName"
+                  name="userName" [ngClass]="{ 'is-invalid': submitted && f['userName'].errors,'is-valid': submitted && f['userName'].valid }"
+                  id="userName" required [attr.disabled]="disabled ? true : null">
+                  <div *ngIf="submitted && f['userName'].errors" class="invalid-feedback">
+                    <div *ngIf="f['userName'].errors['required']">Please enter userName.</div>
+                  </div>
+              </div>
+            </div>
+
+            <div class="form-group ">
+              <label class="color">Password</label>
+              <div class="input-group mb-3">
+                <div class="input-group-text">
+                  <i class="bi bi-lock"></i>
+                </div>
+                <input type="password" formControlName="password" class="form-control removeDisable"
+                  placeholder="Please enter password" name="password" [ngClass]="{ 'is-invalid': submitted && f['password'].errors,'is-valid': submitted && f['password'].valid }"
+                  id="password" required [attr.disabled]="disabled ? true : null">
+                  <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                    <div *ngIf="f['password'].errors['required']">Please enter password.</div>
+                    <div
+                    *ngIf="!signupForm.hasError('required','password') && signupForm.hasError('minlength','password')" 
+                    class="err-msg">Password must be between 6 character.</div>
+                  </div>
+                 
+              </div>
+            </div>
+
+            <div class="form-group ">
+              <label class="color">Repeat Password</label>
+              <div class="input-group mb-3">
+                <div class="input-group-text">
+                  <i class="bi bi-lock"></i>
+                </div>
+                <input type="password" formControlName="confirmPassword" class="form-control removeDisable"
+                  placeholder="Please enter password" name="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors,'is-valid': submitted && f['confirmPassword'].valid }"
+                  id="confirmPassword" required (keyup)="checkPassword()" [attr.disabled]="disabled ? true : null">
+                  <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
+                    <div *ngIf="f['confirmPassword'].errors['required']">Please enter confirmPassword.</div>
+                    <div
+                    *ngIf="!signupForm.hasError('required','confirmPassword') && signupForm.hasError('minlength','confirmPassword')" 
+                    class="err-msg">Password must be between 6 character.</div>
+                  </div>
+              </div>
+            </div>
+            <div style="margin-top: -20px;" *ngIf="passmessage != ''" class="text-danger">
+              {{passmessage}}</div>
+            <div class="form-group ">
+              <label class="color">Date of Birth</label>
+              <div class="input-group">
+                <input type="date" formControlName="dob" class="form-control removeDisable" name="dob" [ngClass]="{ 'is-invalid': submitted && f['dob'].errors,'is-valid': submitted && f['dob'].valid }"
+                id="dob" required [attr.disabled]="disabled ? true : null">
+                <div *ngIf="submitted && f['dob'].errors" class="invalid-feedback">
+                  <div *ngIf="f['dob'].errors['required']">Please enter dob.</div>
+                </div>
+              </div>
+            </div>
+            <p></p>
+            <div class="form-group">
+              <input type="checkbox"  formControlName="termsAccepted" class="form-check-input" name="termsAccepted" [ngClass]="{ 'is-invalid': submitted && f['termsAccepted'].errors,'is-valid': submitted && f['termsAccepted'].valid }"
+              id="termsAccepted" required [attr.disabled]="disabled ? true : null">
+             &nbsp;  <label class="form-check-label" for="checkbox">
+                I agree all statements in <a href="#!">Terms of service</a>
+              </label>
+              <div *ngIf="submitted && f['termsAccepted'].errors" class="invalid-feedback">
+                <div *ngIf="f['termsAccepted'].errors['required']">Please select term & condition.</div>
+              </div>
+            </div>
+            <p></p>
+            <div class="form-group" style="text-align: center;">
+              <button type="submit" class="btn"
+                style="background-color: rgb(53, 202, 197); color: white;">Register</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-md-6">
+          <img src="assets/art.png" style="width: 360px;height: 490px;">
+        </div>
+        <button id="btn" (click)="login.hide();closeModel();">X</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" bsModal #otp="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-static-name">
+  <div class="modal-dialog" style=" margin-top: 120px;">
+    <div class="modal-content" style="width: 600px;">
+      <div class="row" style="margin: 10px;">
+        <div class="col-md-7">
+          <h4 id="dialog-static-name" class="modal-title pull-left color">Email verifacation</h4>
+          <p></p>
+          <form [formGroup]="otpForm" (ngSubmit)="otpVerification()">
+          <div class="ap-otp-inputs" data-username="otibij" data-channel="email" data-nonce="0-8bf87e338f"
+            data-length="6" data-form="registration">
+          
+              <input class="ap-otp-input" type="tel" maxlength="1" data-index="0" min="0" max="9" required pattern="\d{1}"
+              autofocus value="" formControlName="o1">
+            <input class="ap-otp-input" type="tel" maxlength="1" data-index="1" min="0" max="9" required pattern="\d{1}"
+              value="" formControlName="o2">
+            <input class="ap-otp-input" type="tel" maxlength="1" data-index="2" min="0" max="9" required pattern="\d{1}"
+              value="" formControlName="o3">
+            <input class="ap-otp-input" type="tel" maxlength="1" data-index="3" min="0" max="9" required pattern="\d{1}"
+              value="" formControlName="o4">
+            <input class="ap-otp-input" type="tel" maxlength="1" data-index="4" min="0" max="9" required pattern="\d{1}"
+              value="" formControlName="o5">
+            <input class="ap-otp-input" type="tel" maxlength="1" data-index="5" min="0" max="9" required
+              pattern="\d{1}" formControlName="o6">
+           
+          </div>
+
+          <p></p>
+          <div>
+            <button class="btn" style="background-color: rgb(255, 255, 255); color: black;border: 1px solid black;">Send
+              me a new code</button>&nbsp;
+            <button type="submit" class="btn" style="background-color: rgb(53, 202, 197); color: white;">Verify</button>
+          </div>
+        </form>
+        </div>
+
+        <div class="col-md-5">
+          <img src="assets/art.png" style="width: 230px;height: 200px;">
+        </div>
+        <button id="btn" (click)="otp.hide();login.show()">X</button>
+
+      </div>
+    </div>
+  </div>
+</div>
