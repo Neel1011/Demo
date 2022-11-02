@@ -26,4 +26,18 @@ export class AuthService {
   login(userData: any): Observable<any> {
     return this.http.post(`${environment.apiAuth}login`, userData);
   }
+
+  logOut(userToken:any):Observable<any>{
+    return this.http.post(`${environment.apiAuth}logout`, userToken); 
+  }
+
+  getAuthToken():string {
+    const userdata = JSON.parse(localStorage.getItem('ART')!);
+    return userdata;
+ }
+
+ getUser(id : any):Observable<any>{
+  return this.http.get(`${environment.apiUser}users/` + id)
+ }
+
 }

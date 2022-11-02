@@ -3,8 +3,11 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <input  type="search" placeholder="Search" aria-label="Search" style="width: 1100px;height: 40px;">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="btn" style="color: white;" routerLink="/login" (click)="login()">Login <i class="bi bi-box-arrow-in-right"></i></button>&nbsp;
-        <button class="btn btn-warning" routerLink="/register" (click)="signup()">Register <i class="bi bi-box-arrow-in-right"></i></button>
+        <button class="btn" style="color: white;" routerLink="/login" (click)="login()"  *ngIf="!logout">Login <i class="bi bi-box-arrow-in-right"></i></button>&nbsp;
+        <button class="btn btn-warning" routerLink="/register" (click)="signup()"  *ngIf="!logout">Register <i class="bi bi-box-arrow-in-right"></i></button>
+         
+         <span style="color: white;font-size: 25px;" *ngIf="logout">{{authName}}</span> &nbsp;&nbsp;&nbsp;
+        <button class="btn btn-danger"  (click)="logoutUser()" *ngIf="logout">Logout <i class="bi bi-box-arrow-right"></i></button>
       </div>
   </nav>
 

@@ -47,11 +47,16 @@ export class LoginComponent implements OnInit {
     
 
     this.authService.login(this.signinForm.value).subscribe(res => {
-      console.log('res :>> ', res);
       if(res.success){
         this.toaster.showSuccess(res.message,'');
+        const userData = {
+          ART : res.data.user.token,
+          ART_user : res.data.user.username.userName
+        }
+        localStorage.setItem('ART', JSON.stringify(res.data.user.token))
         this.login.hide();
         this.signinForm.reset();
+        this.close.emit('login');
       }else{
       this.toaster.showError(res.message,'')
       }

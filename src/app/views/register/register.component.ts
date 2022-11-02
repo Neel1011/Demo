@@ -139,7 +139,7 @@ export class RegisterComponent implements OnInit , OnChanges{
 
   closeModel(){
     this.login.hide();
-    this.close.emit('close');
+    this.close.emit('signup');
     this.signupForm.reset();
     this.otpForm.reset();
    }

@@ -7,11 +7,13 @@ import { NavbarComponent } from './views/navbar/navbar.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './shared/services/auth.service';
 import { ToastrModule } from 'ngx-toastr';
 import { NotificationService } from './shared/services/notification.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TokenInterceptor } from './shared/intercipter/token.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +33,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [HttpClient,AuthService,NotificationService],
+  providers: [HttpClient,AuthService,NotificationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
